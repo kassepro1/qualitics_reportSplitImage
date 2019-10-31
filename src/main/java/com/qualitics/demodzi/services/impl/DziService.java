@@ -61,7 +61,9 @@ public class DziService {
         log.info("NOM IMAGE  :"+fileName);
         spb.buildPyramid(pir, fileName, archive, 1);
         log.info("DZI IMAGE  :"+Constant.PATH_FOLDER_IMAGES+"/"+fileName+"_files");
-        return Constant.PATH_FOLDER_IMAGES+"/"+fileName+"_files/";
+
+      // return "https://192.168.1.11"+"/"+fileName+"_files/";
+       return Constant.PATH_FOLDER_IMAGES+"/"+fileName+"_files/";
     }
 
     public String getFileByUrlAndGeneratePath(String url) throws IOException {
