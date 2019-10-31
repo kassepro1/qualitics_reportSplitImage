@@ -6,6 +6,7 @@ import gov.nist.isg.archiver.FilesArchiver;
 import gov.nist.isg.pyramidio.BufferedImageReader;
 import gov.nist.isg.pyramidio.PartialImageReader;
 import gov.nist.isg.pyramidio.ScalablePyramidBuilder;
+import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
+@Slf4j
 public class DziService {
 
     @Autowired
@@ -51,19 +53,19 @@ public class DziService {
         FilesArchiver archive = new DirectoryArchiver(outputFolder);
         PartialImageReader pir = new BufferedImageReader(file);
         String ext = getExtensionByStringHandling(fImage.getOriginalFilename()).get();
-        System.out.println("EXTENSION "+ext);
+        log.info("NOM ORIGINAL IMAGE  :"+fImage.getOriginalFilename());
+        log.info("EXTENSION IMAGE  :"+ext);
         String fileName = fImage.getOriginalFilename().substring(0,fImage.getOriginalFilename().lastIndexOf("."));
         System.out.println("image name "+fImage.getName());
-       // String fileName = fImage.getName();
-                System.out.println("Name Fichier : "+fileName);
+        System.out.println("Name Fichier : "+fileName);
+        log.info("NOM IMAGE  :"+fileName);
         spb.buildPyramid(pir, fileName, archive, 1);
-
-        return path_dzi+"/"+fileName+"_files";
+        log.info("DZI IMAGE  :"+Constant.PATH_FOLDER_IMAGES+"/"+fileName+"_files");
+        return Constant.PATH_FOLDER_IMAGES+"/"+fileName+"_files";
     }
 
     public String getFileByUrlAndGeneratePath(String url) throws IOException {
-        //Url imageUrl = new Url("https://site.com/image.jpeg");  // Sample url, replace with yours
-
+        log.info("URL IMAGE :"+url);
         URL imageUrl = new URL(url);
         URLConnection uc;
         uc = imageUrl.openConnection();
